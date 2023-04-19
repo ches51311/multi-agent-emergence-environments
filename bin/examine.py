@@ -51,7 +51,7 @@ def main(argv):
         # packages which are only needed for playing policies, not for any of the
         # environments code.
         from mae_envs.viewer.policy_viewer import PolicyViewer
-        from ma_policy.load_policy import load_policy
+        from ma_policy.ma_policy import DummyAgentPolicy
         policy_names = names[1:]
         env, args_remaining_env = load_env(env_name, core_dir=core_dir,
                                            envs_dir=envs_dir, xmls_dir=xmls_dir,
@@ -64,8 +64,7 @@ def main(argv):
 
         env.reset()  # generate action and observation spaces
         assert np.all([name.endswith('.npz') for name in policy_names])
-        policies = [load_policy(name, env=env, scope=f'policy_{i}')
-                    for i, name in enumerate(policy_names)]
+        policies = [DummyAgentPolicy()]
 
 
         args_remaining_policy = args_remaining_env
